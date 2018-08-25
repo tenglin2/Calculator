@@ -28,6 +28,7 @@ body{
   text-align: center;
   font-family: "Inconsolate", monospace;
   font-size: 32px;
+  color: white;
   position: relative;
   top: 8px;
 }
@@ -48,38 +49,37 @@ body{
 
 }
 #stringScreen{
-  height: 40px;
+  height: 42px;
+  width: 100%;
   background-color: orange;
   display: block;
-  outline: 1px solid black;
 }
 #mainScreen{
+  position: relative;
+  bottom: 2px;
   height: 80px;
+  width: 100%;
   background-color: violet;
-  display: block;
-  outline: 1px solid black;
+  display: inline-block;
 }
 #stringOutput{
   float: right;
-  position: relative;
-  bottom: 5px;
-  right: 25px;
   font-family: "Inconsolata", monospace;
   font-size: 14px;
   color: white;
+  margin-right: 15px;
+  /* display: inline-block; */
 }
 #mainOutput{
   float: right;
-  position: relative;
-  left: 65px;
-  top: 5px;
   font-family: "Inconsolata", monospace;
-  font-size: 20px;
+  font-size: 24px;
   color: white;
+  margin-right: 15px;
+  /* display: inline-block; */
 }
 .buttons div{
   background-color: salmon;
-  outline: 1px solid black;
 }
 .button{
   width: 75px;
@@ -118,7 +118,7 @@ body{
   font-family: "Lucida Console", monospace;
   font-size: 16px;
   font-weight: 700;
-  color: black;
+  color: white;
   text-decoration: none;
   position: relative;
   left: 10px;
