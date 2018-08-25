@@ -1,3 +1,7 @@
+html{
+  overflow-x: hidden;
+  overflow-y: auto;
+}
 #test{
   font-family: "Inconsolata", monospace;
   font-size: 32px;
@@ -12,14 +16,24 @@
   float: left;
 }
 
-
+.footer{
+  position: absolute;
+  height: 5%;
+  width: 100%;
+  bottom: 0;
+  background-color: #7fb3d5;
+  box-shadow: 0 -3px 3px 0 rgba(0, 0, 0, .3);
+}
 #sourceLink{
   font-family: "Lucida Console", monospace;
   font-size: 16px;
   font-weight: 700;
   color: black;
   text-decoration: none;
-  margin-left: 5px;
+  position: relative;
+  left: 10px;
+  top: 10px;
+
 }
 #sourceLink:hover{
   text-decoration: underline;
