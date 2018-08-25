@@ -37,22 +37,51 @@ body{
   margin-left: auto;
   margin-right: auto;
   height: 580px;
-  width: 400px;
+  width: 375px;
   background-color: lightgray;
 }
-#frame div{
-  display: inline-block;
+
+.screen{
+  height: 105px;
+  width: 100%;
+
 }
+#stringScreen{
+  height: 30px;
+  background-color: orange;
+  display: block;
+}
+#mainScreen{
+  height: 75px;
+  background-color: violet;
+  display: block;
+}
+#stringOutput{
+  float: right;
+  position: relative;
+  bottom: 5px;
+  right: 25px;
+  font-family: "Inconsolata", monospace;
+  font-size: 14px;
+}
+#mainOutput{
+  float: right;
+  position: relative;
+  left: 65px;
+  font-family: "Inconsolata", monospace;
+  font-size: 20px;
+}
+
 .button{
-  width: 80px;
-  height: 80px;
+  width: 75px;
+  height: 75px;
   background-color: pink;
   display: inline-block;
-  outline: 1px solid black;
+  /* outline: 1px solid black; */
   float: left;
 }
 #equalsButton{
-  width: 160px;
+  width: 150px;
 }
 
 
