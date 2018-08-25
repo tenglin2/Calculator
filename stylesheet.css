@@ -6,7 +6,6 @@ body{
   margin: 0;
   padding: 0;
 }
-
 .page{
   position: absolute;
   top: 0;
@@ -14,6 +13,8 @@ body{
   width: 100%;
   background-color: #d6eaf8;
 }
+
+
 .titleContainer{
   margin-left: auto;
   margin-right: auto;
@@ -30,18 +31,28 @@ body{
   position: relative;
   top: 8px;
 }
-#test{
-  font-family: "Inconsolata", monospace;
-  font-size: 32px;
-  text-align: center;
+
+#frame{
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 580px;
+  width: 400px;
+  background-color: lightgray;
+}
+#frame div{
+  display: inline-block;
 }
 .button{
-  width: 20px;
-  height: 20px;
-  outline: 1px solid rgba(0,0,0,.5);
+  width: 80px;
+  height: 80px;
   background-color: pink;
   display: inline-block;
+  outline: 1px solid black;
   float: left;
+}
+#equalsButton{
+  width: 160px;
 }
 
 
