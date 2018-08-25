@@ -2,6 +2,34 @@ html{
   overflow-x: hidden;
   overflow-y: auto;
 }
+body{
+  margin: 0;
+  padding: 0;
+}
+
+.page{
+  position: absolute;
+  top: 0;
+  height: 95%;
+  width: 100%;
+  background-color: #d6eaf8;
+}
+.titleContainer{
+  margin-left: auto;
+  margin-right: auto;
+  background-color: salmon;
+  height: 50px;
+  width: 250px;
+  border-radius: 10px;
+  box-shadow: 0 0 4px 1px rgba(0,0,0,.5);
+}
+#title{
+  text-align: center;
+  font-family: "Inconsolate", monospace;
+  font-size: 32px;
+  position: relative;
+  top: 8px;
+}
 #test{
   font-family: "Inconsolata", monospace;
   font-size: 32px;
@@ -15,6 +43,8 @@ html{
   display: inline-block;
   float: left;
 }
+
+
 
 .footer{
   position: absolute;
