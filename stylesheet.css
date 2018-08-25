@@ -33,28 +33,31 @@ body{
 }
 
 #frame{
-  margin-top: 30px;
+  margin-top: 50px;
   margin-left: auto;
   margin-right: auto;
-  height: 580px;
+  height: 495px;
   width: 375px;
   background-color: lightgray;
+  box-shadow: 0 0 8px 3px rgba(0,0,0,.4);
 }
 
 .screen{
-  height: 105px;
+  height: 120px;
   width: 100%;
 
 }
 #stringScreen{
-  height: 30px;
+  height: 40px;
   background-color: orange;
   display: block;
+  outline: 1px solid black;
 }
 #mainScreen{
-  height: 75px;
+  height: 80px;
   background-color: violet;
   display: block;
+  outline: 1px solid black;
 }
 #stringOutput{
   float: right;
@@ -63,22 +66,39 @@ body{
   right: 25px;
   font-family: "Inconsolata", monospace;
   font-size: 14px;
+  color: white;
 }
 #mainOutput{
   float: right;
   position: relative;
   left: 65px;
+  top: 5px;
   font-family: "Inconsolata", monospace;
   font-size: 20px;
+  color: white;
 }
-
+.buttons div{
+  background-color: salmon;
+  outline: 1px solid black;
+}
 .button{
   width: 75px;
   height: 75px;
-  background-color: pink;
   display: inline-block;
-  /* outline: 1px solid black; */
   float: left;
+}
+.button:hover{
+  background-color: #ec7063;
+
+}
+.button p{
+  text-align: center;
+  position: relative;
+  top: 5px;
+  font-family: "Inconsolata", monospace;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
 }
 #equalsButton{
   width: 150px;
