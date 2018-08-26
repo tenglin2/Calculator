@@ -41,5 +41,17 @@ function del(){
   console.log("yo");
 }
 
+function signEventListener(){
+  const signButton = document.getElementById("signButton");
+  signButton.addEventListener("click", (e) => {
+    changeSign();
+  });
+}
+function changeSign(){
+  // mainOutput
+  console.log("Hello");
+}
+
 clearEventListener();
 deleteEventListener();
+signEventListener();
