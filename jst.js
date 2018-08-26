@@ -19,15 +19,69 @@
 //   })
 // })
 
+// isNaN(passiveExpression.textContent.slice(-1)) && passiveExpression.textContent.slice(-1) != "." && passiveExpression.textContent.slice(-1) != "(" &&
+// passiveExpression.textContent.slice(-1) != ")"
+
 var activeExpression = document.getElementById("activeExpression");
 var passiveExpression = document.getElementById("passiveExpression");
 
-const activeButtons = document.querySelectorAll(".active");
-activeButtons.forEach(button => {
-  button.addEventListener("click", (e) => {
-    activeExpression.textContent += button.children[0].textContent;
+function activeEventListener(){
+  const activeButtons = document.querySelectorAll(".active");
+  activeInput(activeButtons);
+}
+function activeInput(activeButtons){
+  activeButtons.forEach(button => {
+    button.addEventListener("click", (e) => {
+      activeExpression.textContent += button.children[0].textContent;
+    })
+  });
+}
+
+function passiveEventListener(){
+  const passiveButtons = document.querySelectorAll(".passive");
+  passiveInput(passiveButtons);
+}
+function passiveInput(passiveButtons){
+  passiveButtons.forEach(button => {
+    button.addEventListener("click", (e) => {
+      if(activeExpression.textContent === "" && passiveExpression.textContent === ""){
+        activeExpression.textContent = "Invalid Input";
+      }else if(activeExpression.textContent === "" && (passiveExpression.textContent === "+" ||
+      passiveExpression.textContent === "-" ||
+      passiveExpression.textContent === "x" ||
+      passiveExpression.textContent === "/" ||
+      passiveExpression.textContent === "^" ||
+      passiveExpression.textContent === "%")){
+        console.log("this happens")
+        console.log(passiveExpression.textContent.slice(-1));
+        passiveExpression.textContent += passiveExpression.textContent.slice(0, passiveExpression.textContent.length - 1);
+        passiveExpression.textContent += button.children[0].textContent;
+      }else{
+        console.log("that happens");
+        if(activeExpression.textContent === "Invalid Input"){
+          return;
+        }else{
+          console.log(button.children[0].textContent);
+          passiveExpression.textContent += activeExpression.textContent;
+          passiveExpression.textContent += button.children[0].textContent;
+          activeExpression.textContent = "";
+        }
+
+        // passiveExpression.textContent += activeExpression.textContent + button.children[0].textContent;
+        // activeExpression.textContent = "";
+      }
+
+
+    })
   })
-});
+}
+
+// const activeButtons = document.querySelectorAll(".active");
+// activeButtons.forEach(button => {
+//   button.addEventListener("click", (e) => {
+//     activeExpression.textContent += button.children[0].textContent;
+//   })
+// });
 
 // console.log("Hello");
 // const active = document.querySelectorAll(".active");
@@ -49,6 +103,7 @@ function clearEventListener(){
 }
 function clear(){
   passiveExpression.textContent = "";
+  activeExpression.textContent = "";
 }
 
 function deleteEventListener(){
@@ -58,13 +113,20 @@ function deleteEventListener(){
   });
 }
 function del(){
-  // var activeLength = activeExpression.textContent.length;
-  // if (activeLength = 0){
-  //   return;
-  // }else{
-  //   activeExpression.textContent = activeExpression.textContent.slice(0, activeLength - 1);
-  // }
-  console.log("chump");
+  if(activeExpression.textContent.length != 0){
+    if(passiveExpression.textContent.slice(-1) === "="){
+      passiveExpression.textContent = "";
+    }else{
+      activeExpression.textContent = activeExpression.textContent.slice(0, activeExpression.textContent.length);
+    }
+
+  }else{
+    if(isNaN(passiveExpression.textContent.slice(-1))){
+      passiveExpression.textContent = passiveExpression.textContent.slice(0, passiveExpression.textContent.length - 1);
+    }else{
+      passiveExpression.textContent = "";
+    }
+  }
 }
 
 function signEventListener(){
@@ -81,6 +143,31 @@ function changeSign(){
   }
 }
 
+function decimalEventListener(){
+  const decimalButton = document.getElementById("decimalButton");
+  decimalButton.addEventListener("click", (e) => {
+    if(activeExpression.textContent.length === 0){
+      activeExpression.textContent += "0."
+    }
+    var containsDecimal = false;
+    var string = activeExpression.textContent;
+    var i = 0;
+    for(i; i < string.length; i++){
+      if(string[i] === "."){
+        containsDecimal = true;
+      }
+    }
+    if(containsDecimal === true){
+      console.log("Already have a decimal, error message but does nothing.");
+    }else{
+      activeExpression.textContent += ".";
+    }
+  })
+}
+
 clearEventListener();
 deleteEventListener();
 signEventListener();
+activeEventListener();
+passiveEventListener();
+decimalEventListener();
