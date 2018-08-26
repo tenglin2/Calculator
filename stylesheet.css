@@ -49,9 +49,9 @@ body{
 
 }
 #stringScreen{
-  height: 42px;
+  height: 43px;
   width: 100%;
-  background-color: orange;
+  background-color: salmon;
   display: block;
 }
 #mainScreen{
@@ -59,7 +59,7 @@ body{
   bottom: 2px;
   height: 80px;
   width: 100%;
-  background-color: violet;
+  background-color: tan;
   display: inline-block;
 }
 #stringOutput{
@@ -68,6 +68,7 @@ body{
   font-size: 14px;
   color: white;
   margin-right: 15px;
+  letter-spacing: 2px;
   /* display: inline-block; */
 }
 #mainOutput{
