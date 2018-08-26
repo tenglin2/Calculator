@@ -32,7 +32,11 @@ function activeEventListener(){
 function activeInput(activeButtons){
   activeButtons.forEach(button => {
     button.addEventListener("click", (e) => {
+      if(activeExpression.textContent === "Invalid Input"){
+        activeExpression.textContent = "";
+      }
       activeExpression.textContent += button.children[0].textContent;
+
     })
   });
 }
@@ -46,22 +50,18 @@ function passiveInput(passiveButtons){
     button.addEventListener("click", (e) => {
       if(activeExpression.textContent === "" && passiveExpression.textContent === ""){
         activeExpression.textContent = "Invalid Input";
-      }else if(activeExpression.textContent === "" && (passiveExpression.textContent === "+" ||
-      passiveExpression.textContent === "-" ||
-      passiveExpression.textContent === "x" ||
-      passiveExpression.textContent === "/" ||
-      passiveExpression.textContent === "^" ||
-      passiveExpression.textContent === "%")){
-        console.log("this happens")
-        console.log(passiveExpression.textContent.slice(-1));
-        passiveExpression.textContent += passiveExpression.textContent.slice(0, passiveExpression.textContent.length - 1);
+      }else if(activeExpression.textContent === "" && (passiveExpression.textContent.slice(-1) === "+" ||
+      passiveExpression.textContent.slice(-1) === "-" ||
+      passiveExpression.textContent.slice(-1) === "x" ||
+      passiveExpression.textContent.slice(-1) === "/" ||
+      passiveExpression.textContent.slice(-1) === "^" ||
+      passiveExpression.textContent.slice(-1) === "%")){
+        passiveExpression.textContent = passiveExpression.textContent.slice(0, passiveExpression.textContent.length - 1);
         passiveExpression.textContent += button.children[0].textContent;
       }else{
-        console.log("that happens");
         if(activeExpression.textContent === "Invalid Input"){
           return;
         }else{
-          console.log(button.children[0].textContent);
           passiveExpression.textContent += activeExpression.textContent;
           passiveExpression.textContent += button.children[0].textContent;
           activeExpression.textContent = "";
@@ -117,7 +117,7 @@ function del(){
     if(passiveExpression.textContent.slice(-1) === "="){
       passiveExpression.textContent = "";
     }else{
-      activeExpression.textContent = activeExpression.textContent.slice(0, activeExpression.textContent.length);
+      activeExpression.textContent = activeExpression.textContent.slice(0, activeExpression.textContent.length - 1);
     }
 
   }else{
