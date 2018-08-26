@@ -53,6 +53,9 @@ body{
   width: 100%;
   background-color: salmon;
   display: block;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 #mainScreen{
   position: relative;
@@ -61,6 +64,9 @@ body{
   width: 100%;
   background-color: tan;
   display: inline-block;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 #stringOutput{
   float: right;
@@ -87,12 +93,18 @@ body{
   height: 75px;
   display: inline-block;
   float: left;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 .button:hover{
   background-color: #ec7063;
 
 }
 .button p{
+  /* -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none; */
   text-align: center;
   position: relative;
   top: 5px;
