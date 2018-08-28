@@ -37,7 +37,17 @@ function activeInput(activeButtons){
     button.addEventListener("click", (e) => {
       if(activeExpression.textContent === "Invalid Input"){
         activeExpression.textContent = "";
+      }else if(passiveExpression.textContent.slice(-1) === "=" && !(isNaN(button.children[0].textContent))){
+        console.log("1 happens");
+        passiveExpression.textContent = "";
+        activeExpression.textContent = "";
+      }else if(passiveExpression.textContent.slice(-1) === "=" && isNaN(button.children[0].textContent)){
+        console.log("2 happens");
+        passiveExpression.textContent = activeExpression.textContent + button.children[0].textContent;
+        activeExpression.textContent = "";
+        return;
       }
+      console.log("standard input");
       activeExpression.textContent += button.children[0].textContent;
 
     })
@@ -61,6 +71,9 @@ function passiveInput(passiveButtons){
       passiveExpression.textContent.slice(-1) === "%")){
         passiveExpression.textContent = passiveExpression.textContent.slice(0, passiveExpression.textContent.length - 1);
         passiveExpression.textContent += button.children[0].textContent;
+      }else if(passiveExpression.textContent.slice(-1) === "="){
+        passiveExpression.textContent = activeExpression.textContent + button.children[0].textContent;
+        activeExpression.textContent =  "";
       }else{
         if(activeExpression.textContent === "Invalid Input"){
           return;
@@ -77,6 +90,27 @@ function passiveInput(passiveButtons){
 
     })
   })
+}
+
+function equalsEventListener(){
+  const equalsButton = document.getElementById("equalsButton");
+  equalsButton.addEventListener("click", (e) => {
+    evaluate();
+  })
+}
+function evaluate(){
+  if(activeExpression.textContent.length = 0){
+    console.log("Error. Incomplete expression");
+  }else if(passiveExpression.textContent.slice(-1) === "="){
+    console.log("Do nothing.");
+  }else{
+    passiveExpression.textContent += activeExpression.textContent;
+    var evaluateString = passiveExpression.textContent;
+    evaluateString.replace(/^/g, "**");
+    evaluateString = eval(evaluateString).toString();
+    activeExpression.textContent = evaluateString;
+    passiveExpression.textContent += "=";
+  }
 }
 
 // const activeButtons = document.querySelectorAll(".active");
@@ -119,6 +153,7 @@ function del(){
   if(activeExpression.textContent.length != 0){
     if(passiveExpression.textContent.slice(-1) === "="){
       passiveExpression.textContent = "";
+      activeExpression.textContent = activeExpression.textContent.slice(0, activeExpression.textContent.length - 1);
     }else{
       activeExpression.textContent = activeExpression.textContent.slice(0, activeExpression.textContent.length - 1);
     }
@@ -149,6 +184,10 @@ function changeSign(){
 function decimalEventListener(){
   const decimalButton = document.getElementById("decimalButton");
   decimalButton.addEventListener("click", (e) => {
+    if(passiveExpression.textContent.slice(-1) === "="){
+      passiveExpression.textContent = "";
+      activeExpression.textContent = "0.";
+    }
     if(activeExpression.textContent.length === 0){
       activeExpression.textContent += "0."
     }
@@ -175,3 +214,4 @@ signEventListener();
 activeEventListener();
 passiveEventListener();
 decimalEventListener();
+equalsEventListener();
