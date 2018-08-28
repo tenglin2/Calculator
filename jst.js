@@ -35,20 +35,23 @@ function activeEventListener(){
 function activeInput(activeButtons){
   activeButtons.forEach(button => {
     button.addEventListener("click", (e) => {
-      if(activeExpression.textContent === "Invalid Input"){
-        activeExpression.textContent = "";
-      }else if(passiveExpression.textContent.slice(-1) === "=" && !(isNaN(button.children[0].textContent))){
-        console.log("1 happens");
-        passiveExpression.textContent = "";
-        activeExpression.textContent = "";
-      }else if(passiveExpression.textContent.slice(-1) === "=" && isNaN(button.children[0].textContent)){
-        console.log("2 happens");
-        passiveExpression.textContent = activeExpression.textContent + button.children[0].textContent;
-        activeExpression.textContent = "";
-        return;
+      if(activeExpression.textContent.length < 28){
+        if(activeExpression.textContent === "Invalid Input"){
+          activeExpression.textContent = "";
+        }
+        // else if(passiveExpression.textContent.slice(-1) === "=" && !(isNaN(button.children[0].textContent))){
+        //   console.log("1 happens");
+        //   passiveExpression.textContent = "";
+        //   activeExpression.textContent = "";
+        // }else if(passiveExpression.textContent.slice(-1) === "=" && isNaN(button.children[0].textContent)){
+        //   console.log("2 happens");
+        //   passiveExpression.textContent = activeExpression.textContent + button.children[0].textContent;
+        //   activeExpression.textContent = "";
+        //   return;
+        // }
+        activeExpression.textContent += button.children[0].textContent;
       }
-      console.log("standard input");
-      activeExpression.textContent += button.children[0].textContent;
+
 
     })
   });
