@@ -228,6 +228,7 @@ function leftParenthesis(leftButton){
 }
 
 function rightParenthesisEventListener(){
+
   const rightButton = document.getElementById("rightParenthesisButton");
   rightButton.addEventListener("click", (e) => {
     rightParenthesis(rightButton);
@@ -236,17 +237,18 @@ function rightParenthesisEventListener(){
 function rightParenthesis(rightButton){
   var leftCount = passiveExpression.textContent.match(/\(/g).length;
   var rightCount;
-  if (passiveExpression.textContent.indexOf(")") > -1){
+  if (passiveExpression.textContent.includes(")")){
     rightCount = passiveExpression.textContent.match(/\)/g).length;
   }else{
     rightCount = 0;
   }
-  rightCount += activeExpression.textContent.match(/\)/g).length;
+
   if(rightCount < leftCount){
     activeExpression.textContent += rightButton.children[0].textContent;
   }else{
     console.log("Too many right parentheses.");
   }
+  rightCount += 1;
 }
 
 clearEventListener();
