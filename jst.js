@@ -22,6 +22,9 @@
 // isNaN(passiveExpression.textContent.slice(-1)) && passiveExpression.textContent.slice(-1) != "." && passiveExpression.textContent.slice(-1) != "(" &&
 // passiveExpression.textContent.slice(-1) != ")"
 
+
+// Okay our next part we have to create the evaluate function. No we don't. All we need to do is handle the sign issues. I think I can just use the eval function though I have to handle the sign changes.
+
 var activeExpression = document.getElementById("activeExpression");
 var passiveExpression = document.getElementById("passiveExpression");
 
@@ -52,7 +55,7 @@ function passiveInput(passiveButtons){
         activeExpression.textContent = "Invalid Input";
       }else if(activeExpression.textContent === "" && (passiveExpression.textContent.slice(-1) === "+" ||
       passiveExpression.textContent.slice(-1) === "-" ||
-      passiveExpression.textContent.slice(-1) === "x" ||
+      passiveExpression.textContent.slice(-1) === "*" ||
       passiveExpression.textContent.slice(-1) === "/" ||
       passiveExpression.textContent.slice(-1) === "^" ||
       passiveExpression.textContent.slice(-1) === "%")){
@@ -164,6 +167,7 @@ function decimalEventListener(){
     }
   })
 }
+
 
 clearEventListener();
 deleteEventListener();
