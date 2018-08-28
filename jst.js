@@ -1,4 +1,6 @@
 // Plan on adding support for keyboard and touchscreen by simply adding eventListeners for keydown as well as touch. Right now the calculator is functional through mouse clicks so that's pretty much the assignment, but I want to make it something I am proud of and can show off. So more work later.
+// Forgot that I need to do something about the ? button. Maybe open an information window, though I don't know how to do that just yet...
+// Keep in mind that after you finish this whole project, it will be in your best interest to actually present the readMes in a respectable fashion. Make your Github portfolio impressive and actually do a respectable resume.
 
 var activeExpression = document.getElementById("activeExpression");
 var passiveExpression = document.getElementById("passiveExpression");
