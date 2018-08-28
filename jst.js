@@ -38,6 +38,8 @@ function activeInput(activeButtons){
       if(activeExpression.textContent.length < 28){
         if(activeExpression.textContent === "Invalid Input"){
           activeExpression.textContent = "";
+        }else if(activeExpression.textContent.slice("-1") === ")"){
+          console.log("Error, do nothing.");
         }
         // else if(passiveExpression.textContent.slice(-1) === "=" && !(isNaN(button.children[0].textContent))){
         //   console.log("1 happens");
@@ -107,6 +109,7 @@ function evaluate(){
   }else if(passiveExpression.textContent.slice(-1) === "="){
     console.log("Do nothing.");
   }else{
+    // Add in an if statement for errors in the eval function. It should change Active
     passiveExpression.textContent += activeExpression.textContent;
     var evaluateString = passiveExpression.textContent;
     evaluateString.replace(/^/g, "**");
@@ -210,6 +213,41 @@ function decimalEventListener(){
   })
 }
 
+function leftParenthesisEventListener(){
+  const leftButton = document.getElementById("leftParenthesisButton");
+  leftButton.addEventListener("click", (e) => {
+    leftParenthesis(leftButton);
+  })
+}
+function leftParenthesis(leftButton){
+  if(activeExpression.textContent.length > 0){
+    console.log("Error, invalid input");
+  }else{
+    passiveExpression.textContent += leftButton.children[0].textContent;
+  }
+}
+
+function rightParenthesisEventListener(){
+  const rightButton = document.getElementById("rightParenthesisButton");
+  rightButton.addEventListener("click", (e) => {
+    rightParenthesis(rightButton);
+  })
+}
+function rightParenthesis(rightButton){
+  var leftCount = passiveExpression.textContent.match(/\(/g).length;
+  var rightCount;
+  if (passiveExpression.textContent.indexOf(")") > -1){
+    rightCount = passiveExpression.textContent.match(/\)/g).length;
+  }else{
+    rightCount = 0;
+  }
+  rightCount += activeExpression.textContent.match(/\)/g).length;
+  if(rightCount < leftCount){
+    activeExpression.textContent += rightButton.children[0].textContent;
+  }else{
+    console.log("Too many right parentheses.");
+  }
+}
 
 clearEventListener();
 deleteEventListener();
@@ -218,3 +256,5 @@ activeEventListener();
 passiveEventListener();
 decimalEventListener();
 equalsEventListener();
+leftParenthesisEventListener();
+rightParenthesisEventListener();
