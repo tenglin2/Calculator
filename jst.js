@@ -11,7 +11,7 @@ function activeEventListener(){
 }
 function activeInput(activeButtons){
   activeButtons.forEach(button => {
-    button.addEventListener("click", (e) => {
+    button.addEventListener("click", event => {
       if(activeExpression.textContent.length < 28){
         if(activeExpression.textContent === "Invalid Input"){
           activeExpression.textContent = "";
@@ -21,6 +21,59 @@ function activeInput(activeButtons){
         activeExpression.textContent += button.children[0].textContent;
       }
     })
+    button.addEventListener("touchend", event => {
+      if(activeExpression.textContent.length < 28){
+        if(activeExpression.textContent === "Invalid Input"){
+          activeExpression.textContent = "";
+        }else if(activeExpression.textContent.slice("-1") === ")"){
+          console.log("Error, do nothing.");
+        }
+        activeExpression.textContent += button.children[0].textContent;
+      }
+    })
+  });
+
+  window.addEventListener("keypress", event => {
+    if(activeExpression.textContent.length < 28){
+      if(activeExpression.textContent === "Invalid Input"){
+        activeExpression.textContent = "";
+      }else if(activeExpression.textContent.slice("-1") === ")"){
+        console.log("Error, do nothing.");
+      }
+      switch(event.key){
+        case "1":
+          activeExpression.textContent += "1";
+          break;
+        case "2":
+          activeExpression.textContent += "2";
+          break;
+        case "3":
+          activeExpression.textContent += "3";
+          break;
+        case "4":
+          activeExpression.textContent += "4";
+          break;
+        case "5":
+          activeExpression.textContent += "5";
+          break;
+        case "6":
+          activeExpression.textContent += "6";
+          break;
+        case "7":
+          activeExpression.textContent += "7";
+          break;
+        case "8":
+          activeExpression.textContent += "8";
+          break;
+        case "9":
+          activeExpression.textContent += "9";
+          break;
+        case "0":
+          activeExpression.textContent += "0";
+          break;
+
+      }
+    }
   });
 }
 
