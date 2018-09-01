@@ -1,4 +1,4 @@
-// Plan on adding support for keyboard and touchscreen by simply adding eventListeners for keydown as well as touch. Right now the calculator is functional through mouse clicks so that's pretty much the assignment, but I want to make it something I am proud of and can show off. So more work later.
+// Plan on adding support for keyboard and touchscreen by simply adding eventListeners for keypress as well as touch. Right now the calculator is functional through mouse clicks so that's pretty much the assignment, but I want to make it something I am proud of and can show off. So more work later.
 // Forgot that I need to do something about the ? button. Maybe open an information window, though I don't know how to do that just yet...
 // Keep in mind that after you finish this whole project, it will be in your best interest to actually present the readMes in a respectable fashion. Make your Github portfolio impressive and actually do a respectable resume.
 
@@ -136,7 +136,7 @@ function passiveInput(passiveButtons){
 
   });
   window.addEventListener("keypress", event => {
-    if(activeExpression.textContent === "" && passiveExpression.textContent === ""){
+    if(activeExpression.textContent === "" && passiveExpression.textContent === "" && (event.key === "+" || event.key === "-" || event.key === "*" || event.key === "/" || event.key === "^" || event.key === "%")){
       activeExpression.textContent = "Invalid Input";
     }else if(activeExpression.textContent === "" && (passiveExpression.textContent.slice(-1) === "+" ||
     passiveExpression.textContent.slice(-1) === "-" ||
@@ -177,13 +177,16 @@ function passiveInput(passiveButtons){
 
 
     }else if(passiveExpression.textContent.slice(-1) === "="){
-      passiveExpression.textContent = activeExpression.textContent + button.children[0].textContent;
-      activeExpression.textContent =  "";
+      if(event.key === "+" || event.key === "-" || event.key === "*" || event.key === "/" || event.key === "^" || event.key === "%"){
+        passiveExpression.textContent = activeExpression.textContent + event.key;
+        activeExpression.textContent =  "";
+      }
+
     }else{
       if(activeExpression.textContent === "Invalid Input"){
         return;
       }else{
-        console.log(event.key);
+        // console.log(event.key);
         // event.preventDefault();
         switch(event.key){
           case "+":
@@ -233,10 +236,23 @@ function equalsEventListener(){
   const equalsButton = document.getElementById("equalsButton");
   equalsButton.addEventListener("click", (e) => {
     evaluate();
+  });
+  equalsButton.addEventListener("touchend", event => {
+    evaluate();
+  });
+  window.addEventListener("keypress", event => {
+    if(event.key === "Enter"){
+      evaluate();
+    }
+    if(event.key === "="){
+      evaluate();
+    }
   })
 }
 function evaluate(){
-  if(activeExpression.textContent.length = 0){
+  // console.log("eval runs");
+  // console.log(passiveExpression.textContent);
+  if(activeExpression.textContent.length < 1){
     console.log("Error. Incomplete expression");
   }else if(passiveExpression.textContent.slice(-1) === "="){
     console.log("Do nothing.");
@@ -257,6 +273,8 @@ function evaluate(){
     activeExpression.textContent = evaluateString;
     passiveExpression.textContent += "=";
   }
+
+
 }
 
 
@@ -266,6 +284,14 @@ function clearEventListener(){
   clearButton.addEventListener("click", (e) =>{
     clear();
   });
+  clearButton.addEventListener("touchend", event => {
+    clear();
+  })
+  window.addEventListener("keypress", event => {
+    if(event.key === "c"){
+      clear();
+    }
+  })
 }
 function clear(){
   passiveExpression.textContent = "";
@@ -277,6 +303,21 @@ function deleteEventListener(){
   deleteButton.addEventListener("click", (e) =>{
     del();
   });
+  deleteButton.addEventListener("touchend", event => {
+    del();
+  });
+  window.addEventListener("keypress", event => {
+    if(event.key === "Delete"){
+      event.preventDefault();
+      event.stopPropagation();
+      del();
+    }
+    if(event.key === "Backspace"){
+      event.preventDefault();
+      event.stopPropagation();
+      del();
+    }
+  })
 }
 function del(){
   if(activeExpression.textContent.length != 0){
@@ -301,6 +342,14 @@ function signEventListener(){
   signButton.addEventListener("click", (e) => {
     changeSign();
   });
+  signButton.addEventListener("touchend", event => {
+    changeSign();
+  })
+  window.addEventListener("keypress", event => {
+    if(event.key === "s"){
+      changeSign();
+    }
+  })
 }
 function changeSign(){
   if(activeExpression.textContent.slice(0,1) === "-"){
@@ -333,14 +382,73 @@ function decimalEventListener(){
     }else{
       activeExpression.textContent += ".";
     }
+  });
+  decimalButton.addEventListener("touchend", event => {
+    if(passiveExpression.textContent.slice(-1) === "="){
+      passiveExpression.textContent = "";
+      activeExpression.textContent = "0.";
+    }
+    if(activeExpression.textContent.length === 0){
+      activeExpression.textContent += "0."
+    }
+    var containsDecimal = false;
+    var string = activeExpression.textContent;
+    var i = 0;
+    for(i; i < string.length; i++){
+      if(string[i] === "."){
+        containsDecimal = true;
+      }
+    }
+    if(containsDecimal === true){
+      console.log("Already have a decimal, error message but does nothing.");
+    }else{
+      activeExpression.textContent += ".";
+    }
+  });
+  window.addEventListener("keypress", event => {
+    if(event.key === "."){
+      if(passiveExpression.textContent.slice(-1) === "="){
+        passiveExpression.textContent = "";
+        activeExpression.textContent = "0.";
+      }
+      if(activeExpression.textContent.length === 0){
+        activeExpression.textContent += "0."
+      }
+      var containsDecimal = false;
+      var string = activeExpression.textContent;
+      var i = 0;
+      for(i; i < string.length; i++){
+        if(string[i] === "."){
+          containsDecimal = true;
+        }
+      }
+      if(containsDecimal === true){
+        console.log("Already have a decimal, error message but does nothing.");
+      }else{
+        activeExpression.textContent += ".";
+      }
+    }
   })
 }
+
 
 function leftParenthesisEventListener(){
   const leftButton = document.getElementById("leftParenthesisButton");
   leftButton.addEventListener("click", (e) => {
     leftParenthesis(leftButton);
-  })
+  });
+  leftButton.addEventListener("touchend", event => {
+    leftParenthesis(leftButton);
+  });
+  window.addEventListener("keypress", event => {
+    if(event.key === "("){
+      if(activeExpression.textContent.length > 0){
+        console.log("Error, invalid input");
+      }else{
+        passiveExpression.textContent += "(";
+      }
+    }
+  });
 }
 function leftParenthesis(leftButton){
   if(activeExpression.textContent.length > 0){
@@ -355,6 +463,27 @@ function rightParenthesisEventListener(){
   const rightButton = document.getElementById("rightParenthesisButton");
   rightButton.addEventListener("click", (e) => {
     rightParenthesis(rightButton);
+  });
+  rightButton.addEventListener("touchend", event => {
+    rightParenthesis(rightButton);
+  })
+  window.addEventListener("keypress", event => {
+    if(event.key === ")"){
+      var leftCount = passiveExpression.textContent.match(/\(/g).length;
+      var rightCount;
+      if (passiveExpression.textContent.includes(")")){
+        rightCount = passiveExpression.textContent.match(/\)/g).length;
+      }else{
+        rightCount = 0;
+      }
+
+      if(rightCount < leftCount){
+        activeExpression.textContent += ")";
+      }else{
+        console.log("Too many right parentheses.");
+      }
+      rightCount += 1;
+    }
   })
 }
 function rightParenthesis(rightButton){
