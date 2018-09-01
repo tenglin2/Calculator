@@ -1,8 +1,3 @@
-// Plan on adding support for keyboard and touchscreen by simply adding eventListeners for keypress as well as touch. Right now the calculator is functional through mouse clicks so that's pretty much the assignment, but I want to make it something I am proud of and can show off. So more work later.
-// Forgot that I need to do something about the ? button. Maybe open an information window, though I don't know how to do that just yet...
-// Keep in mind that after you finish this whole project, it will be in your best interest to actually present the readMes in a respectable fashion. Make your Github portfolio impressive and actually do a respectable resume.
-
-// Need to make a error message when eval fails.
 
 var activeExpression = document.getElementById("activeExpression");
 var passiveExpression = document.getElementById("passiveExpression");
@@ -18,20 +13,29 @@ function activeInput(activeButtons){
       if(activeExpression.textContent.length < 28){
         if(activeExpression.textContent === "Invalid Input"){
           activeExpression.textContent = "";
-        }else if(activeExpression.textContent.slice("-1") === ")"){
+        }else if(activeExpression.textContent.slice(-1) === ")"){
           console.log("Error, do nothing.");
+        }else if(passiveExpression.textContent.slice(-1) === "="){
+          activeExpression.textContent += button.children[0].textContent;
+          passiveExpression.textContent = "";
+        }else{
+          activeExpression.textContent += button.children[0].textContent;
         }
-        activeExpression.textContent += button.children[0].textContent;
+
       }
     })
     button.addEventListener("touchend", event => {
       if(activeExpression.textContent.length < 28){
         if(activeExpression.textContent === "Invalid Input"){
           activeExpression.textContent = "";
-        }else if(activeExpression.textContent.slice("-1") === ")"){
+        }else if(activeExpression.textContent.slice(-1) === ")"){
           console.log("Error, do nothing.");
+        }else if(passiveExpression.textContent.slice(-1) === "="){
+          activeExpression.textContent += button.children[0].textContent;
+          passiveExpression.textContent = "";
+        }else{
+          activeExpression.textContent += button.children[0].textContent;
         }
-        activeExpression.textContent += button.children[0].textContent;
       }
     })
   });
@@ -40,7 +44,7 @@ function activeInput(activeButtons){
     if(activeExpression.textContent.length < 28){
       if(activeExpression.textContent === "Invalid Input"){
         activeExpression.textContent = "";
-      }else if(activeExpression.textContent.slice("-1") === ")"){
+      }else if(activeExpression.textContent.slice(-1) === ")"){
         console.log("Error, do nothing.");
       }
       switch(event.key){
@@ -75,6 +79,9 @@ function activeInput(activeButtons){
           activeExpression.textContent += "0";
           break;
 
+      }
+      if(passiveExpression.textContent.slice(-1) === "="){
+        passiveExpression.textContent = "";
       }
     }
   });
@@ -472,22 +479,32 @@ function rightParenthesisEventListener(){
   })
   window.addEventListener("keypress", event => {
     if(event.key === ")"){
-      var leftCount = passiveExpression.textContent.match(/\(/g).length;
-      var rightCount;
-      if (passiveExpression.textContent.includes(")")){
-        console.log("Yes it includes");
-        rightCount = activeExpression.textContent.match(/\)/g).length;
+      var leftCount = 0;
+      var rightCount = 0;
+      if(passiveExpression.textContent.includes("(")){
+        leftCount = passiveExpression.textContent.match(/\(/g).length;
+      }
+      if (passiveExpression.textContent.includes(")") || activeExpression.textContent.includes(")")){
+        if(passiveExpression.textContent.includes(")")){
+          rightCount += passiveExpression.textContent.match(/\)/g).length;
+        }
+        if(activeExpression.textContent.includes(")")){
+          rightCount += activeExpression.textContent.match(/\)/g).length;
+        }
+
+        console.log("right is " + rightCount);
       }else{
         rightCount = 0;
       }
-      console.log(rightCount)
+
       if(rightCount < leftCount){
-        activeExpression.textContent += ")";
+        activeExpression.textContent += rightButton.children[0].textContent;
       }else{
         console.log("Too many right parentheses.");
       }
       rightCount += 1;
     }
+
   });
 }
 function rightParenthesis(rightButton){
