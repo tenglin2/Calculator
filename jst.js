@@ -23,21 +23,7 @@ function activeInput(activeButtons){
         }
 
       }
-    })
-    button.addEventListener("touchend", event => {
-      if(activeExpression.textContent.length < 28){
-        if(activeExpression.textContent === "Invalid Input"){
-          activeExpression.textContent = "";
-        }else if(activeExpression.textContent.slice(-1) === ")"){
-          console.log("Error, do nothing.");
-        }else if(passiveExpression.textContent.slice(-1) === "="){
-          activeExpression.textContent += button.children[0].textContent;
-          passiveExpression.textContent = "";
-        }else{
-          activeExpression.textContent += button.children[0].textContent;
-        }
-      }
-    })
+    });
   });
 
   window.addEventListener("keypress", event => {
@@ -116,31 +102,7 @@ function passiveInput(passiveButtons){
           activeExpression.textContent = "";
         }
       }
-    })
-    button.addEventListener("touchend", event => {
-      if(activeExpression.textContent === "" && passiveExpression.textContent === ""){
-        activeExpression.textContent = "Invalid Input";
-      }else if(activeExpression.textContent === "" && (passiveExpression.textContent.slice(-1) === "+" ||
-      passiveExpression.textContent.slice(-1) === "-" ||
-      passiveExpression.textContent.slice(-1) === "*" ||
-      passiveExpression.textContent.slice(-1) === "/" ||
-      passiveExpression.textContent.slice(-1) === "^" ||
-      passiveExpression.textContent.slice(-1) === "%")){
-        passiveExpression.textContent = passiveExpression.textContent.slice(0, passiveExpression.textContent.length - 1);
-        passiveExpression.textContent += button.children[0].textContent;
-      }else if(passiveExpression.textContent.slice(-1) === "="){
-        passiveExpression.textContent = activeExpression.textContent + button.children[0].textContent;
-        activeExpression.textContent =  "";
-      }else{
-        if(activeExpression.textContent === "Invalid Input"){
-          return;
-        }else{
-          passiveExpression.textContent += activeExpression.textContent;
-          passiveExpression.textContent += button.children[0].textContent;
-          activeExpression.textContent = "";
-        }
-      }
-    })
+    });
 
   });
   window.addEventListener("keypress", event => {
@@ -247,9 +209,6 @@ function equalsEventListener(){
   equalsButton.addEventListener("click", (e) => {
     evaluate();
   });
-  equalsButton.addEventListener("touchend", event => {
-    evaluate();
-  });
   window.addEventListener("keypress", event => {
     if(event.key === "Enter"){
       evaluate();
@@ -257,17 +216,14 @@ function equalsEventListener(){
     if(event.key === "="){
       evaluate();
     }
-  })
+  });
 }
 function evaluate(){
-  // console.log("eval runs");
-  // console.log(passiveExpression.textContent);
   if(activeExpression.textContent.length < 1){
     console.log("Error. Incomplete expression");
   }else if(passiveExpression.textContent.slice(-1) === "="){
     console.log("Do nothing.");
   }else{
-    // Add in an if statement for errors in the eval function. It should change Active
     passiveExpression.textContent += activeExpression.textContent;
     var evaluateString = passiveExpression.textContent;
     var i = 0;
@@ -283,8 +239,6 @@ function evaluate(){
     activeExpression.textContent = evaluateString;
     passiveExpression.textContent += "=";
   }
-
-
 }
 
 
@@ -311,9 +265,6 @@ function clear(){
 function deleteEventListener(){
   const deleteButton = document.getElementById("deleteButton");
   deleteButton.addEventListener("click", (e) =>{
-    del();
-  });
-  deleteButton.addEventListener("touchend", event => {
     del();
   });
   window.addEventListener("keypress", event => {
@@ -350,9 +301,6 @@ function del(){
 function signEventListener(){
   const signButton = document.getElementById("signButton");
   signButton.addEventListener("click", (e) => {
-    changeSign();
-  });
-  signButton.addEventListener("touchend", event => {
     changeSign();
   });
   window.addEventListener("keypress", event => {
@@ -393,28 +341,7 @@ function decimalEventListener(){
       activeExpression.textContent += ".";
     }
   });
-  decimalButton.addEventListener("touchend", event => {
-    if(passiveExpression.textContent.slice(-1) === "="){
-      passiveExpression.textContent = "";
-      activeExpression.textContent = "0.";
-    }
-    if(activeExpression.textContent.length === 0){
-      activeExpression.textContent += "0."
-    }
-    var containsDecimal = false;
-    var string = activeExpression.textContent;
-    var i = 0;
-    for(i; i < string.length; i++){
-      if(string[i] === "."){
-        containsDecimal = true;
-      }
-    }
-    if(containsDecimal === true){
-      console.log("Already have a decimal, error message but does nothing.");
-    }else{
-      activeExpression.textContent += ".";
-    }
-  });
+
   window.addEventListener("keypress", event => {
     if(event.key === "."){
       if(passiveExpression.textContent.slice(-1) === "="){
@@ -447,9 +374,6 @@ function leftParenthesisEventListener(){
   leftButton.addEventListener("click", (e) => {
     leftParenthesis(leftButton);
   });
-  leftButton.addEventListener("touchend", event => {
-    leftParenthesis(leftButton);
-  });
   window.addEventListener("keypress", event => {
     if(event.key === "("){
       if(activeExpression.textContent.length > 0){
@@ -474,9 +398,6 @@ function rightParenthesisEventListener(){
   rightButton.addEventListener("click", (e) => {
     rightParenthesis(rightButton);
   });
-  rightButton.addEventListener("touchend", event => {
-    rightParenthesis(rightButton);
-  })
   window.addEventListener("keypress", event => {
     if(event.key === ")"){
       var leftCount = 0;
@@ -542,13 +463,7 @@ function popupEventListener(){
       popupBox.style.visibility = "hidden";
     }
   });
-  questionButton.addEventListener("touchend", event => {
-    if(popupBox.style.visibility === "hidden"){
-      popupBox.style.visibility = "visible";
-    }else{
-      popupBox.style.visibility = "hidden";
-    }
-  });
+
   window.addEventListener("keypress", event => {
     if(event.key === "?"){
       if(popupBox.style.visibility === "hidden"){
@@ -557,7 +472,7 @@ function popupEventListener(){
         popupBox.style.visibility = "hidden";
       }
     }
-  })
+  });
 }
 
 clearEventListener();
