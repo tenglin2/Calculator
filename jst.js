@@ -14,7 +14,7 @@ function activeInput(activeButtons){
         if(activeExpression.textContent === "Invalid Input"){
           activeExpression.textContent = "";
         }else if(activeExpression.textContent.slice(-1) === ")"){
-          console.log("Error, do nothing.");
+          return;
         }else if(passiveExpression.textContent.slice(-1) === "="){
           activeExpression.textContent += button.children[0].textContent;
           passiveExpression.textContent = "";
@@ -31,7 +31,7 @@ function activeInput(activeButtons){
       if(activeExpression.textContent === "Invalid Input"){
         activeExpression.textContent = "";
       }else if(activeExpression.textContent.slice(-1) === ")"){
-        console.log("Error, do nothing.");
+        return;
       }
       switch(event.key){
         case "1":
@@ -158,8 +158,6 @@ function passiveInput(passiveButtons){
       if(activeExpression.textContent === "Invalid Input"){
         return;
       }else{
-        // console.log(event.key);
-        // event.preventDefault();
         switch(event.key){
           case "+":
             passiveExpression.textContent += activeExpression.textContent;
@@ -220,9 +218,9 @@ function equalsEventListener(){
 }
 function evaluate(){
   if(activeExpression.textContent.length < 1){
-    console.log("Error. Incomplete expression");
+    return;
   }else if(passiveExpression.textContent.slice(-1) === "="){
-    console.log("Do nothing.");
+    return;
   }else{
     passiveExpression.textContent += activeExpression.textContent;
     var evaluateString = passiveExpression.textContent;
@@ -336,7 +334,7 @@ function decimalEventListener(){
       }
     }
     if(containsDecimal === true){
-      console.log("Already have a decimal, error message but does nothing.");
+      return;
     }else{
       activeExpression.textContent += ".";
     }
@@ -360,7 +358,7 @@ function decimalEventListener(){
         }
       }
       if(containsDecimal === true){
-        console.log("Already have a decimal, error message but does nothing.");
+        return;
       }else{
         activeExpression.textContent += ".";
       }
@@ -377,7 +375,7 @@ function leftParenthesisEventListener(){
   window.addEventListener("keypress", event => {
     if(event.key === "("){
       if(activeExpression.textContent.length > 0){
-        console.log("Error, invalid input");
+        return;
       }else{
         passiveExpression.textContent += "(";
       }
@@ -386,7 +384,7 @@ function leftParenthesisEventListener(){
 }
 function leftParenthesis(leftButton){
   if(activeExpression.textContent.length > 0){
-    console.log("Error, invalid input");
+    return;
   }else{
     passiveExpression.textContent += leftButton.children[0].textContent;
   }
@@ -413,15 +411,12 @@ function rightParenthesisEventListener(){
           rightCount += activeExpression.textContent.match(/\)/g).length;
         }
 
-        console.log("right is " + rightCount);
       }else{
         rightCount = 0;
       }
 
       if(rightCount < leftCount){
         activeExpression.textContent += rightButton.children[0].textContent;
-      }else{
-        console.log("Too many right parentheses.");
       }
       rightCount += 1;
     }
@@ -442,15 +437,12 @@ function rightParenthesis(rightButton){
       rightCount += activeExpression.textContent.match(/\)/g).length;
     }
 
-    console.log("right is " + rightCount);
   }else{
     rightCount = 0;
   }
 
   if(rightCount < leftCount){
     activeExpression.textContent += rightButton.children[0].textContent;
-  }else{
-    console.log("Too many right parentheses.");
   }
   rightCount += 1;
 }
