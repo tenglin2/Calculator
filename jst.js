@@ -6,6 +6,7 @@
 
 var activeExpression = document.getElementById("activeExpression");
 var passiveExpression = document.getElementById("passiveExpression");
+var popupBox = document.getElementById("popup");
 
 function activeEventListener(){
   const activeButtons = document.querySelectorAll(".active");
@@ -178,6 +179,8 @@ function passiveInput(passiveButtons){
 
     }else if(passiveExpression.textContent.slice(-1) === "="){
       if(event.key === "+" || event.key === "-" || event.key === "*" || event.key === "/" || event.key === "^" || event.key === "%"){
+        event.preventDefault();
+        event.stopPropagation();
         passiveExpression.textContent = activeExpression.textContent + event.key;
         activeExpression.textContent =  "";
       }
@@ -344,12 +347,12 @@ function signEventListener(){
   });
   signButton.addEventListener("touchend", event => {
     changeSign();
-  })
+  });
   window.addEventListener("keypress", event => {
     if(event.key === "s"){
       changeSign();
     }
-  })
+  });
 }
 function changeSign(){
   if(activeExpression.textContent.slice(0,1) === "-"){
@@ -428,7 +431,7 @@ function decimalEventListener(){
         activeExpression.textContent += ".";
       }
     }
-  })
+  });
 }
 
 
@@ -472,11 +475,12 @@ function rightParenthesisEventListener(){
       var leftCount = passiveExpression.textContent.match(/\(/g).length;
       var rightCount;
       if (passiveExpression.textContent.includes(")")){
-        rightCount = passiveExpression.textContent.match(/\)/g).length;
+        console.log("Yes it includes");
+        rightCount = activeExpression.textContent.match(/\)/g).length;
       }else{
         rightCount = 0;
       }
-
+      console.log(rightCount)
       if(rightCount < leftCount){
         activeExpression.textContent += ")";
       }else{
@@ -484,13 +488,23 @@ function rightParenthesisEventListener(){
       }
       rightCount += 1;
     }
-  })
+  });
 }
 function rightParenthesis(rightButton){
-  var leftCount = passiveExpression.textContent.match(/\(/g).length;
-  var rightCount;
-  if (passiveExpression.textContent.includes(")")){
-    rightCount = passiveExpression.textContent.match(/\)/g).length;
+  var leftCount = 0;
+  var rightCount = 0;
+  if(passiveExpression.textContent.includes("(")){
+    leftCount = passiveExpression.textContent.match(/\(/g).length;
+  }
+  if (passiveExpression.textContent.includes(")") || activeExpression.textContent.includes(")")){
+    if(passiveExpression.textContent.includes(")")){
+      rightCount += passiveExpression.textContent.match(/\)/g).length;
+    }
+    if(activeExpression.textContent.includes(")")){
+      rightCount += activeExpression.textContent.match(/\)/g).length;
+    }
+
+    console.log("right is " + rightCount);
   }else{
     rightCount = 0;
   }
@@ -502,6 +516,32 @@ function rightParenthesis(rightButton){
   }
   rightCount += 1;
 }
+function popupEventListener(){
+  const questionButton = document.getElementById("questionButton");
+  questionButton.addEventListener("click", event => {
+    if(popupBox.style.visibility === "hidden"){
+      popupBox.style.visibility = "visible";
+    }else{
+      popupBox.style.visibility = "hidden";
+    }
+  });
+  questionButton.addEventListener("touchend", event => {
+    if(popupBox.style.visibility === "hidden"){
+      popupBox.style.visibility = "visible";
+    }else{
+      popupBox.style.visibility = "hidden";
+    }
+  });
+  window.addEventListener("keypress", event => {
+    if(event.key === "?"){
+      if(popupBox.style.visibility === "hidden"){
+        popupBox.style.visibility = "visible";
+      }else{
+        popupBox.style.visibility = "hidden";
+      }
+    }
+  })
+}
 
 clearEventListener();
 deleteEventListener();
@@ -512,3 +552,4 @@ decimalEventListener();
 equalsEventListener();
 leftParenthesisEventListener();
 rightParenthesisEventListener();
+popupEventListener();
