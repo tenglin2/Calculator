@@ -1,6 +1,6 @@
 html{
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 body{
   margin: 0;
@@ -13,7 +13,6 @@ body{
   width: 100%;
   background-color: #d6eaf8;
 }
-
 
 .titleContainer{
   margin-left: auto;
@@ -32,7 +31,6 @@ body{
   position: relative;
   top: 8px;
 }
-
 
 #frame{
   margin-top: 50px;
@@ -85,7 +83,24 @@ body{
   font-size: 24px;
   color: white;
   margin-right: 15px;
-  /* display: inline-block; */
+}
+
+#popup{
+  visibility: hidden;
+  height: 300px;
+  width: 375px;
+  background-color: tan;
+  display: inline-block;
+  z-index: 1;
+  position: relative;
+  bottom: 300px;
+}
+#popup p{
+  padding: 10px 25px;
+  font-family: "Inconsolata", monospace;
+  font-family: 16px;
+  color: white;
+  text-align: justify;
 }
 .buttons div{
   width: 75px;
@@ -114,8 +129,6 @@ body{
   width: 150px;
 }
 
-
-
 .footer{
   position: absolute;
   height: 5%;
@@ -123,6 +136,7 @@ body{
   bottom: 0;
   background-color: #7fb3d5;
   box-shadow: 0 -3px 3px 0 rgba(0, 0, 0, .3);
+  margin-bottom: 0;
 }
 #sourceLink{
   font-family: "Lucida Console", monospace;
@@ -133,7 +147,8 @@ body{
   position: relative;
   left: 10px;
   top: 10px;
-
+  display: inline-block;
+  margin-bottom: 200px;
 }
 #sourceLink:hover{
   text-decoration: underline;
