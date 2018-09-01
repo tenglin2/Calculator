@@ -2,6 +2,8 @@
 // Forgot that I need to do something about the ? button. Maybe open an information window, though I don't know how to do that just yet...
 // Keep in mind that after you finish this whole project, it will be in your best interest to actually present the readMes in a respectable fashion. Make your Github portfolio impressive and actually do a respectable resume.
 
+// Need to make a error message when eval fails.
+
 var activeExpression = document.getElementById("activeExpression");
 var passiveExpression = document.getElementById("passiveExpression");
 
@@ -83,7 +85,7 @@ function passiveEventListener(){
 }
 function passiveInput(passiveButtons){
   passiveButtons.forEach(button => {
-    button.addEventListener("click", (e) => {
+    button.addEventListener("click", event => {
       if(activeExpression.textContent === "" && passiveExpression.textContent === ""){
         activeExpression.textContent = "Invalid Input";
       }else if(activeExpression.textContent === "" && (passiveExpression.textContent.slice(-1) === "+" ||
@@ -106,10 +108,125 @@ function passiveInput(passiveButtons){
           activeExpression.textContent = "";
         }
       }
-
-
     })
-  })
+    button.addEventListener("touchend", event => {
+      if(activeExpression.textContent === "" && passiveExpression.textContent === ""){
+        activeExpression.textContent = "Invalid Input";
+      }else if(activeExpression.textContent === "" && (passiveExpression.textContent.slice(-1) === "+" ||
+      passiveExpression.textContent.slice(-1) === "-" ||
+      passiveExpression.textContent.slice(-1) === "*" ||
+      passiveExpression.textContent.slice(-1) === "/" ||
+      passiveExpression.textContent.slice(-1) === "^" ||
+      passiveExpression.textContent.slice(-1) === "%")){
+        passiveExpression.textContent = passiveExpression.textContent.slice(0, passiveExpression.textContent.length - 1);
+        passiveExpression.textContent += button.children[0].textContent;
+      }else if(passiveExpression.textContent.slice(-1) === "="){
+        passiveExpression.textContent = activeExpression.textContent + button.children[0].textContent;
+        activeExpression.textContent =  "";
+      }else{
+        if(activeExpression.textContent === "Invalid Input"){
+          return;
+        }else{
+          passiveExpression.textContent += activeExpression.textContent;
+          passiveExpression.textContent += button.children[0].textContent;
+          activeExpression.textContent = "";
+        }
+      }
+    })
+
+  });
+  window.addEventListener("keypress", event => {
+    if(activeExpression.textContent === "" && passiveExpression.textContent === ""){
+      activeExpression.textContent = "Invalid Input";
+    }else if(activeExpression.textContent === "" && (passiveExpression.textContent.slice(-1) === "+" ||
+    passiveExpression.textContent.slice(-1) === "-" ||
+    passiveExpression.textContent.slice(-1) === "*" ||
+    passiveExpression.textContent.slice(-1) === "/" ||
+    passiveExpression.textContent.slice(-1) === "^" ||
+    passiveExpression.textContent.slice(-1) === "%")){
+      switch(event.key){
+        case "+":
+          passiveExpression.textContent = passiveExpression.textContent.slice(0, passiveExpression.textContent.length - 1);
+          passiveExpression.textContent += "+";
+          break;
+        case "-":
+          passiveExpression.textContent = passiveExpression.textContent.slice(0, passiveExpression.textContent.length - 1);
+          passiveExpression.textContent += "-";
+          break;
+        case "*":
+          passiveExpression.textContent = passiveExpression.textContent.slice(0, passiveExpression.textContent.length - 1);
+          passiveExpression.textContent += "*";
+          break;
+        case "/":
+          event.preventDefault();
+          event.stopPropagation();
+          passiveExpression.textContent = passiveExpression.textContent.slice(0, passiveExpression.textContent.length - 1);
+          passiveExpression.textContent += "/";
+          break;
+        case "^":
+          passiveExpression.textContent = passiveExpression.textContent.slice(0, passiveExpression.textContent.length - 1);
+          passiveExpression.textContent += "^";
+          break;
+        case "%":
+          passiveExpression.textContent = passiveExpression.textContent.slice(0, passiveExpression.textContent.length - 1);
+          passiveExpression.textContent += "%";
+          break;
+        default:
+          return;
+      }
+
+
+    }else if(passiveExpression.textContent.slice(-1) === "="){
+      passiveExpression.textContent = activeExpression.textContent + button.children[0].textContent;
+      activeExpression.textContent =  "";
+    }else{
+      if(activeExpression.textContent === "Invalid Input"){
+        return;
+      }else{
+        console.log(event.key);
+        // event.preventDefault();
+        switch(event.key){
+          case "+":
+            passiveExpression.textContent += activeExpression.textContent;
+            passiveExpression.textContent += "+";
+            activeExpression.textContent = "";
+            break;
+          case "-":
+            passiveExpression.textContent += activeExpression.textContent;
+            passiveExpression.textContent += "-";
+            activeExpression.textContent = "";
+            break;
+          case "*":
+            passiveExpression.textContent += activeExpression.textContent;
+            passiveExpression.textContent += "*";
+            activeExpression.textContent = "";
+            break;
+          case "/":
+            event.preventDefault();
+            event.stopPropagation();
+            passiveExpression.textContent += activeExpression.textContent;
+            passiveExpression.textContent += "/";
+            activeExpression.textContent = "";
+            break;
+          case "^":
+            passiveExpression.textContent += activeExpression.textContent;
+            passiveExpression.textContent += "^";
+            activeExpression.textContent = "";
+            break;
+          case "%":
+            passiveExpression.textContent += activeExpression.textContent;
+            passiveExpression.textContent += "%";
+            activeExpression.textContent = "";
+            break;
+          default:
+            return;
+        }
+
+      }
+    }
+
+  });
+
 }
 
 function equalsEventListener(){
