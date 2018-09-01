@@ -20,8 +20,6 @@ function activeInput(activeButtons){
         }
         activeExpression.textContent += button.children[0].textContent;
       }
-
-
     })
   });
 }
@@ -76,8 +74,16 @@ function evaluate(){
     // Add in an if statement for errors in the eval function. It should change Active
     passiveExpression.textContent += activeExpression.textContent;
     var evaluateString = passiveExpression.textContent;
-    evaluateString.replace(/^/g, "**");
-    evaluateString = eval(evaluateString).toString();
+    var i = 0;
+    while(evaluateString.includes("^")){
+      if(evaluateString[i] === "^"){
+        var firstHalf = evaluateString.slice(0, i);
+        var secondHalf = evaluateString.slice(i+1, evaluateString.length);
+        evaluateString = firstHalf.concat("**", secondHalf);
+      }
+      i++;
+    }
+    evaluateString = eval(evaluateString);
     activeExpression.textContent = evaluateString;
     passiveExpression.textContent += "=";
   }
