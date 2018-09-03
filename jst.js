@@ -1,13 +1,18 @@
-
+// Declaring the variables that will be manipulated later.
 var activeExpression = document.getElementById("activeExpression");
 var passiveExpression = document.getElementById("passiveExpression");
 var popupBox = document.getElementById("popup");
 
+// Active buttons are all the divs that are digits and they are characterized as active because they are mainly resting in active expression.
+// activeEventListener() calls activeInput with parameter activeButtons.
 function activeEventListener(){
   const activeButtons = document.querySelectorAll(".active");
   activeInput(activeButtons);
 }
+// activeInput adds an event listener to all the elements that contain the class "active".
+// The conditions for active will generally be added straight to the active expression textContent unless there is a prior error.
 function activeInput(activeButtons){
+  // Click event listener.
   activeButtons.forEach(button => {
     button.addEventListener("click", event => {
       if(activeExpression.textContent.length < 28){
@@ -25,7 +30,7 @@ function activeInput(activeButtons){
       }
     });
   });
-
+  // Keyboard shortcuts for active buttons. Select them by hitting the numbers key on the keyboard.
   window.addEventListener("keypress", event => {
     if(activeExpression.textContent.length < 28){
       if(activeExpression.textContent === "Invalid Input"){
@@ -73,11 +78,16 @@ function activeInput(activeButtons){
   });
 }
 
+// Passive buttons are one that manipulate and launch the textContent in active into the passiveExpression.
+// This is the largest function because it must handle several errors in computation.
+// passiveEventListener() calls passiveInput() with parameter passiveButtons.
 function passiveEventListener(){
   const passiveButtons = document.querySelectorAll(".passive");
   passiveInput(passiveButtons);
 }
+// In general when a passive button is clicked, it takes the activeExpression and adds it to the current passiveExpression which will be evaluated.
 function passiveInput(passiveButtons){
+  // Mouse click event listener.
   passiveButtons.forEach(button => {
     button.addEventListener("click", event => {
       if(activeExpression.textContent === "" && passiveExpression.textContent === ""){
@@ -105,6 +115,7 @@ function passiveInput(passiveButtons){
     });
 
   });
+  // Keyboard support for passive buttons.
   window.addEventListener("keypress", event => {
     if(activeExpression.textContent === "" && passiveExpression.textContent === "" && (event.key === "+" || event.key === "-" || event.key === "*" || event.key === "/" || event.key === "^" || event.key === "%")){
       activeExpression.textContent = "Invalid Input";
@@ -202,6 +213,7 @@ function passiveInput(passiveButtons){
 
 }
 
+// equalsEventListener() calls the evaluate function when "=" is activated.
 function equalsEventListener(){
   const equalsButton = document.getElementById("equalsButton");
   equalsButton.addEventListener("click", (e) => {
@@ -216,6 +228,7 @@ function equalsEventListener(){
     }
   });
 }
+// Evaluate preps the passiveExpression into a usable format, then uses the eval() function to return a string of the final product.
 function evaluate(){
   if(activeExpression.textContent.length < 1){
     return;
@@ -240,7 +253,7 @@ function evaluate(){
 }
 
 
-
+// When clear button is pressed, clear() function is activated.
 function clearEventListener(){
   const clearButton = document.getElementById("clearButton");
   clearButton.addEventListener("click", (e) =>{
@@ -255,16 +268,19 @@ function clearEventListener(){
     }
   })
 }
+// Clear makes the textContent of the active and passive expressions into empty strings.
 function clear(){
   passiveExpression.textContent = "";
   activeExpression.textContent = "";
 }
 
+// When del button is activated, call del function.
 function deleteEventListener(){
   const deleteButton = document.getElementById("deleteButton");
   deleteButton.addEventListener("click", (e) =>{
     del();
   });
+  // Keyboard supports both the delete and backspace button to delete a character.
   window.addEventListener("keypress", event => {
     if(event.key === "Delete"){
       event.preventDefault();
@@ -278,6 +294,7 @@ function deleteEventListener(){
     }
   })
 }
+// Delete will generally delete 1 character at a time, though there are some conditions where it will completely clear for convenience.
 function del(){
   if(activeExpression.textContent.length != 0){
     if(passiveExpression.textContent.slice(-1) === "="){
@@ -296,6 +313,7 @@ function del(){
   }
 }
 
+// Sign button event listener calls changeSign().
 function signEventListener(){
   const signButton = document.getElementById("signButton");
   signButton.addEventListener("click", (e) => {
@@ -307,6 +325,7 @@ function signEventListener(){
     }
   });
 }
+// Change sign simply adds a "-" to active expression or takes it away.
 function changeSign(){
   if(activeExpression.textContent.slice(0,1) === "-"){
     activeExpression.textContent = activeExpression.textContent.slice(1);
@@ -315,6 +334,7 @@ function changeSign(){
   }
 }
 
+// Decimal buttons add a decimal to the event listener. There are safeguards to prevent multiple decimals from occurring.
 function decimalEventListener(){
   const decimalButton = document.getElementById("decimalButton");
   decimalButton.addEventListener("click", (e) => {
@@ -366,7 +386,7 @@ function decimalEventListener(){
   });
 }
 
-
+// leftParenthesisEventListener calls leftParenthesis.
 function leftParenthesisEventListener(){
   const leftButton = document.getElementById("leftParenthesisButton");
   leftButton.addEventListener("click", (e) => {
@@ -382,6 +402,7 @@ function leftParenthesisEventListener(){
     }
   });
 }
+// Left parenthesis can only be added if activeExpression is empty.
 function leftParenthesis(leftButton){
   if(activeExpression.textContent.length > 0){
     return;
@@ -390,6 +411,7 @@ function leftParenthesis(leftButton){
   }
 }
 
+// rightParenthesisEventListener calls rightParenthesis.
 function rightParenthesisEventListener(){
 
   const rightButton = document.getElementById("rightParenthesisButton");
@@ -423,6 +445,7 @@ function rightParenthesisEventListener(){
 
   });
 }
+// To prevent right parentheses from outnumbering the left parentheses, we must make a count of left and right and only add the right parenthesis if right count is less than left count.
 function rightParenthesis(rightButton){
   var leftCount = 0;
   var rightCount = 0;
@@ -446,6 +469,8 @@ function rightParenthesis(rightButton){
   }
   rightCount += 1;
 }
+
+// Popup event listener toggles the visibility of the popup div when the "?" button is pressed.
 function popupEventListener(){
   const questionButton = document.getElementById("questionButton");
   questionButton.addEventListener("click", event => {
@@ -467,6 +492,7 @@ function popupEventListener(){
   });
 }
 
+// Calling all the event listener functions.
 clearEventListener();
 deleteEventListener();
 signEventListener();
